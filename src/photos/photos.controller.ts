@@ -1,7 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFiles,
+  Res,
+} from '@nestjs/common';
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { of } from 'rxjs';
+import { join } from 'path';
 
 @Controller('photos')
 export class PhotosController {
@@ -30,5 +44,11 @@ export class PhotosController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.photosService.remove(+id);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FilesInterceptor('files'))
+  uploadFile(@UploadedFiles() files: Array<Express.Multer.File>, @Res() res) {
+    return res.sendFile(join(process.cwd(), files[0].path));
   }
 }
