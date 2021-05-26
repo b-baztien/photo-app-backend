@@ -16,11 +16,10 @@ const storage = {};
         destination: './upload',
         filename: (req, file, cb) => {
           const extension = file.originalname.split('.').pop();
-
           const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
 
-          cb(null, `${file.filename}-${uniqueSuffix}.${extension}`);
+          cb(null, `${uniqueSuffix}.${extension}`);
         },
       }),
     }),
