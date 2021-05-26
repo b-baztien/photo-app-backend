@@ -1,7 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { ObjectID } from 'mongodb';
 
 @Controller('photos')
 export class PhotosController {
@@ -22,13 +32,13 @@ export class PhotosController {
     return this.photosService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
-    return this.photosService.update(+id, updatePhotoDto);
+    return this.photosService.update(new ObjectID(id), updatePhotoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.photosService.remove(+id);
+    return this.photosService.remove(new ObjectID(id));
   }
 }
