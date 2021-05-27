@@ -26,12 +26,8 @@ export class PhotosService {
   }
 
   async update(id: ObjectID, updatePhotoDto: UpdatePhotoDto) {
-    let newPhoto: Photo[] = await this.photoRepository.find({
-      where: { _id: id },
-    });
-
-    // newPhoto[0] = newPhoto[0].title;
-    // return this.photoRepository.save();
+    let stringId: string = id.toHexString();
+    return this.photoRepository.update(stringId, updatePhotoDto);
   }
 
   async updatePhoto(id: ObjectID, files: string[]) {
