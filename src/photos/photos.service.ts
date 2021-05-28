@@ -22,10 +22,10 @@ export class PhotosService {
       where: {
         $or: [
           {
-            title: { $regex: searchText ?? '', $options: 'i' },
+            title: { $regex: `.*${searchText ?? ''}.*`, $options: 'i' },
           },
           {
-            description: { $regex: searchText ?? '', $options: 'i' },
+            description: { $regex: `.*${searchText ?? ''}.*`, $options: 'i' },
           },
         ],
       },

@@ -15,9 +15,6 @@ import { PhotosService } from './photos.service';
 
 @Controller('photos')
 export class PhotosController {
-  // private photoPath: string[];
-  // private id: string[];
-
   constructor(private readonly photosService: PhotosService) {}
 
   @Post()
@@ -44,19 +41,4 @@ export class PhotosController {
   remove(@Param('id') id: string) {
     return this.photosService.remove(new ObjectID(id));
   }
-
-  // @Get('upload/:photopath')
-  // getFile(@Param('photopath') photopath: string, @Res() res) {
-  //   return res.sendFile(join(process.cwd(), photopath));
-  // }
-
-  // @Post(':id/upload')
-  // @UseInterceptors(FilesInterceptor('files'))
-  // uploadFile(
-  //   @Param('id') id: string,
-  //   @UploadedFiles() files: Array<Express.Multer.File>,
-  // ) {
-  //   photoPath;
-  //   return;
-  // }
 }
