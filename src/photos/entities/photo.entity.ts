@@ -8,4 +8,10 @@ export class Photo {
 
   @Column()
   title: string;
+
+  @Column()
+  description: string;
+
+  @Column()
+  photos: string[];
 }
