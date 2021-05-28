@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectID } from 'mongodb';
-import { Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { Photo } from './entities/photo.entity';
@@ -17,8 +17,13 @@ export class PhotosService {
     return this.photoRepository.save(createPhotoDto);
   }
 
-  findAll() {
-    return this.photoRepository.find();
+  findAll(createPhotoDto: CreatePhotoDto) {
+    return this.photoRepository.find({
+      where: {
+        title: { $regex: createPhotoDto.title ?? '' },
+        description: { $regex: createPhotoDto.description ?? '' },
+      },
+    });
   }
 
   findOne(id: ObjectID) {

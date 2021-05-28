@@ -25,8 +25,8 @@ export class PhotosController {
   }
 
   @Get()
-  findAll() {
-    return this.photosService.findAll();
+  findAll(@Body() CreatePhotoDto: CreatePhotoDto) {
+    return this.photosService.findAll(CreatePhotoDto);
   }
 
   @Get(':id')
