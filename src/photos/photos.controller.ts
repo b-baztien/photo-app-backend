@@ -27,7 +27,6 @@ export class PhotosController {
 
   @Get()
   findAll(@Query('searchText') searchText: string) {
-    console.log({ searchText });
     return this.photosService.findAll(searchText);
   }
 
