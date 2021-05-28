@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { CreatePhotoDto } from './dto/create-photo.dto';
@@ -25,8 +26,9 @@ export class PhotosController {
   }
 
   @Get()
-  findAll(@Body() CreatePhotoDto: CreatePhotoDto) {
-    return this.photosService.findAll(CreatePhotoDto);
+  findAll(@Query('searchText') searchText: string) {
+    console.log({ searchText });
+    return this.photosService.findAll(searchText);
   }
 
   @Get(':id')

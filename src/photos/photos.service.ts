@@ -17,11 +17,17 @@ export class PhotosService {
     return this.photoRepository.save(createPhotoDto);
   }
 
-  findAll(createPhotoDto: CreatePhotoDto) {
+  findAll(searchText: string) {
     return this.photoRepository.find({
       where: {
-        title: { $regex: createPhotoDto.title ?? '' },
-        description: { $regex: createPhotoDto.description ?? '' },
+        $or: [
+          {
+            title: { $regex: searchText ?? '' },
+          },
+          {
+            description: { $regex: searchText ?? '' },
+          },
+        ],
       },
     });
   }
