@@ -6,13 +6,8 @@ import {
   Param,
   Post,
   Put,
-  Res,
-  UploadedFiles,
-  UseInterceptors,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
 import { ObjectID } from 'mongodb';
-import { join } from 'path';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { PhotosService } from './photos.service';
@@ -36,7 +31,7 @@ export class PhotosController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.photosService.findOne(+id);
+    return this.photosService.findOne(new ObjectID(id));
   }
 
   @Put(':id')

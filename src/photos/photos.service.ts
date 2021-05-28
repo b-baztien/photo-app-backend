@@ -21,8 +21,8 @@ export class PhotosService {
     return this.photoRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} photo`;
+  findOne(id: ObjectID) {
+    return this.photoRepository.find({ where: { _id: id } });
   }
 
   async update(id: ObjectID, updatePhotoDto: UpdatePhotoDto) {
