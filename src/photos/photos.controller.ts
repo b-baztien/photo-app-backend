@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { ObjectID } from 'mongodb';
 import { ParseObjectIdPipe } from 'src/common/pipes';
 import { CreatePhotoDto } from './dto/create-photo.dto';
@@ -34,12 +34,14 @@ export class PhotosController {
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id', type: String })
   @ApiOperation({ summary: 'FindOne photo' })
   findOne(@Param('id', ParseObjectIdPipe) id: ObjectID) {
     return this.photosService.findOne(id);
   }
 
   @Put(':id')
+  @ApiParam({ name: 'id', type: String })
   @ApiOperation({ summary: 'Update photos' })
   update(
     @Param('id', ParseObjectIdPipe) id: ObjectID,
@@ -49,16 +51,9 @@ export class PhotosController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: String })
   @ApiOperation({ summary: 'Remove photos' })
   remove(@Param('id', ParseObjectIdPipe) id: ObjectID) {
     return this.photosService.remove(id);
   }
-}
-function ApiImplicitQuery(arg0: {
-  name: string;
-  description: string;
-  required: boolean;
-  type: NumberConstructor;
-}) {
-  throw new Error('Function not implemented.');
 }
