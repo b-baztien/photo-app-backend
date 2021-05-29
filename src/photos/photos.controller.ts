@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
+import { ParseObjectIdPipe } from 'src/common/pipes';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { PhotosService } from './photos.service';
@@ -28,17 +29,20 @@ export class PhotosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.photosService.findOne(new ObjectID(id));
+  findOne(@Param('id', ParseObjectIdPipe) id: ObjectID) {
+    return this.photosService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
-    return this.photosService.update(new ObjectID(id), updatePhotoDto);
+  update(
+    @Param('id', ParseObjectIdPipe) id: ObjectID,
+    @Body() updatePhotoDto: UpdatePhotoDto,
+  ) {
+    return this.photosService.update(id, updatePhotoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.photosService.remove(new ObjectID(id));
+  remove(@Param('id', ParseObjectIdPipe) id: ObjectID) {
+    return this.photosService.remove(id);
   }
 }
